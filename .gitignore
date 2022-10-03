@@ -1,0 +1,8 @@
+src/__pycache__
+src/postprocess.py
+src/run_*.py
+src/combine_data.py
+
+Data/
+training_logs/
+github.txt
