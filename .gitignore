@@ -6,6 +6,6 @@ src/combine_data.py
 Data/
 training_logs/
 github.txt
-Figures/angle_*
-Figures/torque_*
+Figures/angle_pdf.png
+Figures/torque_pdf.png
 Figures/sample.png
