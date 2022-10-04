@@ -66,43 +66,6 @@ def create_dataset(sequences):
     return dataset, seq_len, n_features
 
 
-def prelim_plot(path):
-    df = pd.read_csv(path)
-
-    angle = df["ANG"]
-    torque = df["TRQ"]
-
-    TRQ_mean = np.mean(torque)
-    TRQ_std = np.std(torque)
-    criterion = TRQ_mean + 2 * TRQ_std
-
-    ANG_mean = np.mean(angle)
-    ANG_std = np.std(angle)
-    skew_t = skew(torque)
-    skew_a = skew(angle)
-    criterion1 = ANG_mean + 2 * ANG_std
-    criterion2 = ANG_mean - 2 * ANG_std
-
-    plt.style.use("ggplot")
-    plt.hist(torque.ravel(), bins=50, color="green")
-    plt.vlines(criterion, 0, 30000, color="red")
-    plt.text(2400, 50000, f'$\mu={TRQ_mean:.2f}, \sigma={TRQ_std:.2f}, skew={skew_t:.2f}$')
-    plt.text(2700, 25000, f'$\mu + 2*\sigma = {criterion:.2f}$')
-    plt.xlabel("TRQ")
-    plt.savefig("../figures/torque_pdf.png", bbox_inches="tight", dpi=600)
-    plt.close()
-
-    plt.hist(angle.ravel(), bins=50, color="orange")
-    plt.vlines(criterion1, 0, 6000, color="green")
-    plt.vlines(criterion2, 0, 6000, color="green")
-    plt.text(-70, 7000, f"$\mu={ANG_mean:.2f}, \sigma={ANG_std:.2f}, skew={skew_a:.2f}$")
-    plt.text(130, 3000, f"$\mu + 2*\sigma = {criterion1:.2f}$")
-    plt.text(-140, 3000, f"$\mu - 2*\sigma = {criterion2:.2f}$")
-    plt.xlabel("ANG")
-    plt.savefig("../figures/angle_pdf.png", bbox_inches="tight", dpi=600)
-    plt.close()
-
-
 if __name__ == "__main__":
     train_sequence, val_sequence, test_sequence, target_len, num_features, scaler = \
         load_train_val_test(path="../Data/20220823", remove_features=("SPD", "ANG"))
